@@ -1,0 +1,641 @@
+/* ============================================
+   DARK MODE SYSTEM - Toggle Switch Version
+   ============================================ */
+
+/* CSS Variables untuk Light Mode (Default) */
+:root {
+    --bg-primary: #F1FAEE;
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #F8FAFC;
+    --text-primary: #0F172A;
+    --text-secondary: #64748B;
+    --text-muted: #94A3B8;
+    --border-color: #E2E8F0;
+    --border-light: #F1F5F9;
+    --shadow-color: rgba(0, 0, 0, 0.04);
+    --shadow-md: rgba(0, 0, 0, 0.08);
+    --card-bg: #FFFFFF;
+    --input-bg: #F8FAFC;
+    --hover-bg: #F1F5F9;
+    --topbar-bg: rgba(255, 255, 255, 0.95);
+    --sidebar-bg: #1E293B;
+    --sidebar-text: #CBD5E1;
+    --sidebar-hover: rgba(255, 255, 255, 0.1);
+    --sidebar-active: #7C3AED;
+    --badge-bg: #F3E8FF;
+    --badge-text: #7C3AED;
+    --success-bg: #D1FAE5;
+    --success-text: #065F46;
+    --error-bg: #FEE2E2;
+    --error-text: #991B1B;
+    --info-bg: #EFF6FF;
+    --info-text: #1E40AF;
+    --warning-bg: #FEF3C7;
+    --warning-text: #92400E;
+    --table-header-bg: #F8FAFC;
+    --table-row-hover: #F8FAFC;
+    --scrollbar-bg: #F1F5F9;
+    --scrollbar-thumb: #CBD5E1;
+}
+
+/* CSS Variables untuk Dark Mode */
+[data-theme="dark"] {
+    --bg-primary: #0F172A;
+    --bg-secondary: #1E293B;
+    --bg-tertiary: #1E293B;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --border-color: #334155;
+    --border-light: #1E293B;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --shadow-md: rgba(0, 0, 0, 0.5);
+    --card-bg: #1E293B;
+    --input-bg: #0F172A;
+    --hover-bg: #334155;
+    --topbar-bg: rgba(30, 41, 59, 0.95);
+    --sidebar-bg: #0F172A;
+    --sidebar-text: #94A3B8;
+    --sidebar-hover: rgba(255, 255, 255, 0.05);
+    --sidebar-active: #7C3AED;
+    --badge-bg: #2D1B69;
+    --badge-text: #C4B5FD;
+    --success-bg: #064E3B;
+    --success-text: #6EE7B7;
+    --error-bg: #7F1D1D;
+    --error-text: #FCA5A5;
+    --info-bg: #1E3A8A;
+    --info-text: #93C5FD;
+    --warning-bg: #78350F;
+    --warning-text: #FCD34D;
+    --table-header-bg: #0F172A;
+    --table-row-hover: #334155;
+    --scrollbar-bg: #1E293B;
+    --scrollbar-thumb: #475569;
+}
+
+/* ============================================
+   TOGGLE SWITCH - Model Baru (Seperti Gambar)
+   ============================================ */
+
+.theme-toggle,
+.theme-toggle-login {
+    width: 64px;
+    height: 32px;
+    border-radius: 16px;
+    border: 2px solid var(--border-color, #E2E8F0);
+    background: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.theme-toggle:hover,
+.theme-toggle-login:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.theme-toggle:active,
+.theme-toggle-login:active {
+    transform: scale(0.98);
+}
+
+/* Track background - berubah saat dark mode */
+[data-theme="dark"] .theme-toggle,
+[data-theme="dark"] .theme-toggle-login {
+    background: linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%);
+    border-color: #3B82F6;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+[data-theme="dark"] .theme-toggle:hover,
+[data-theme="dark"] .theme-toggle-login:hover {
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* Thumb (bola yang bergerak) */
+.theme-toggle::before,
+.theme-toggle-login::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    top: 2px;
+    left: 2px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+/* Pindahkan thumb saat dark mode */
+[data-theme="dark"] .theme-toggle::before,
+[data-theme="dark"] .theme-toggle-login::before {
+    left: 34px;
+}
+
+/* Icon Matahari (Light Mode) */
+.theme-toggle .icon-sun,
+.theme-toggle-login .icon-sun {
+    position: absolute;
+    left: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    z-index: 1;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+}
+
+/* Icon Bulan (Dark Mode) */
+.theme-toggle .icon-moon,
+.theme-toggle-login .icon-moon {
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    z-index: 1;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.5;
+}
+
+/* Saat dark mode, swap opacity icon */
+[data-theme="dark"] .theme-toggle .icon-sun,
+[data-theme="dark"] .theme-toggle-login .icon-sun {
+    opacity: 0.5;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon,
+[data-theme="dark"] .theme-toggle-login .icon-moon {
+    opacity: 1;
+}
+
+/* Animasi saat toggle */
+.theme-toggle.toggling,
+.theme-toggle-login.toggling {
+    animation: togglePulse 0.4s ease;
+}
+
+@keyframes togglePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* ============================================
+   SMOOTH TRANSITIONS
+   ============================================ */
+
+*,
+*::before,
+*::after {
+    transition: background-color 0.3s ease, 
+                border-color 0.3s ease, 
+                color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+/* ============================================
+   DARK MODE STYLES
+   ============================================ */
+
+[data-theme="dark"] body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .topbar {
+    background: var(--topbar-bg);
+    border-bottom-color: var(--border-color);
+    backdrop-filter: blur(20px);
+}
+
+[data-theme="dark"] .topbar-brand {
+    color: #C4B5FD;
+}
+
+[data-theme="dark"] .topbar-link {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .topbar-link:hover,
+[data-theme="dark"] .topbar-link.active {
+    background: var(--hover-bg);
+    color: #C4B5FD;
+}
+
+[data-theme="dark"] .user-info {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .user-name {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] [style*="background: white"],
+[data-theme="dark"] [style*="background:#fff"],
+[data-theme="dark"] [style*="background: #fff"] {
+    background: var(--card-bg) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] table {
+    background: var(--card-bg);
+}
+
+[data-theme="dark"] th {
+    background: var(--table-header-bg) !important;
+    color: var(--text-secondary) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] td {
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] tr:hover td {
+    background: var(--table-row-hover) !important;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+    background: var(--input-bg) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+    border-color: #7C3AED !important;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+    color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] .alert-success,
+[data-theme="dark"] [style*="background: #D1FAE5"] {
+    background: var(--success-bg) !important;
+    color: var(--success-text) !important;
+    border-color: var(--success-text) !important;
+}
+
+[data-theme="dark"] .alert-error,
+[data-theme="dark"] [style*="background: #FEE2E2"] {
+    background: var(--error-bg) !important;
+    color: var(--error-text) !important;
+    border-color: var(--error-text) !important;
+}
+
+[data-theme="dark"] [style*="background: #EFF6FF"],
+[data-theme="dark"] [style*="background: linear-gradient(135deg, #EFF6FF"] {
+    background: var(--info-bg) !important;
+    color: var(--info-text) !important;
+    border-color: var(--info-text) !important;
+}
+
+[data-theme="dark"] .super-badge,
+[data-theme="dark"] [style*="background: #F3E8FF"] {
+    background: var(--badge-bg) !important;
+    color: var(--badge-text) !important;
+}
+
+[data-theme="dark"] .btn-logout {
+    background: var(--error-bg);
+    color: var(--error-text);
+}
+
+[data-theme="dark"] .btn-logout:hover {
+    background: var(--error-text);
+    color: var(--error-bg);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+    background: var(--scrollbar-bg);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 5px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: #64748B;
+}
+
+[data-theme="dark"] [style*="background: #F8FAFC"] {
+    background: var(--bg-tertiary) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] [style*="border: 1px solid #E2E8F0"] {
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] [style*="border: 1px solid #F1F5F9"] {
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] [style*="background: linear-gradient(135deg, #F3E8FF"] {
+    background: linear-gradient(135deg, #2D1B69 0%, #1E1B4B 100%) !important;
+    border-color: #7C3AED !important;
+}
+
+[data-theme="dark"] [style*="background: linear-gradient(135deg, #EFF6FF"] {
+    background: linear-gradient(135deg, #1E3A8A 0%, #172554 100%) !important;
+    border-color: #3B82F6 !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] p {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] [style*="border-left: 4px solid #3B82F6"] {
+    border-left-color: #3B82F6 !important;
+}
+
+[data-theme="dark"] [style*="border-left: 4px solid #10B981"] {
+    border-left-color: #10B981 !important;
+}
+
+[data-theme="dark"] [style*="border-left: 4px solid #F59E0B"] {
+    border-left-color: #F59E0B !important;
+}
+
+[data-theme="dark"] [style*="border-left: 4px solid #8B5CF6"] {
+    border-left-color: #8B5CF6 !important;
+}
+
+[data-theme="dark"] [style*="border-left: 4px solid #EC4899"] {
+    border-left-color: #EC4899 !important;
+}
+
+[data-theme="dark"] [style*="border-left: 4px solid #6366F1"] {
+    border-left-color: #6366F1 !important;
+}
+/* ============================================
+   DARK MODE - HALAMAN PUBLIK
+   ============================================ */
+
+/* Navbar Publik */
+[data-theme="dark"] .navbar,
+[data-theme="dark"] nav {
+    background: var(--topbar-bg, #1E293B) !important;
+    border-bottom-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .navbar a,
+[data-theme="dark"] nav a {
+    color: var(--text-primary, #F1F5F9) !important;
+}
+
+[data-theme="dark"] .navbar a:hover,
+[data-theme="dark"] nav a:hover {
+    color: #C4B5FD !important;
+}
+
+/* Hero Section */
+[data-theme="dark"] .hero,
+[data-theme="dark"] .hero-section {
+    background: var(--bg-primary, #0F172A) !important;
+    color: var(--text-primary, #F1F5F9) !important;
+}
+
+[data-theme="dark"] .hero h1,
+[data-theme="dark"] .hero h2 {
+    color: var(--text-primary, #F1F5F9) !important;
+}
+
+[data-theme="dark"] .hero p {
+    color: var(--text-secondary, #94A3B8) !important;
+}
+
+/* Sambutan Section */
+[data-theme="dark"] .sambutan-section,
+[data-theme="dark"] [class*="sambutan"] {
+    background: var(--card-bg, #1E293B) !important;
+    border-color: var(--border-color, #334155) !important;
+}
+
+[data-theme="dark"] .sambutan-section h2,
+[data-theme="dark"] .sambutan-section h3 {
+    color: var(--text-primary, #F1F5F9) !important;
+}
+
+[data-theme="dark"] .sambutan-section p {
+    color: var(--text-secondary, #CBD5E1) !important;
+}
+
+/* Berita Section */
+[data-theme="dark"] .berita-section,
+[data-theme="dark"] .news-section,
+[data-theme="dark"] [class*="berita"],
+[data-theme="dark"] [class*="news"] {
+    background: var(--bg-primary, #0F172A) !important;
+}
+
+[data-theme="dark"] .berita-card,
+[data-theme="dark"] .news-card,
+[data-theme="dark"] [class*="card"] {
+    background: var(--card-bg, #1E293B) !important;
+    border-color: var(--border-color, #334155) !important;
+}
+
+[data-theme="dark"] .berita-card h3,
+[data-theme="dark"] .news-card h3 {
+    color: var(--text-primary, #F1F5F9) !important;
+}
+
+[data-theme="dark"] .berita-card p,
+[data-theme="dark"] .news-card p {
+    color: var(--text-secondary, #94A3B8) !important;
+}
+
+/* Galeri Section */
+[data-theme="dark"] .galeri-section,
+[data-theme="dark"] .gallery-section {
+    background: var(--bg-primary, #0F172A) !important;
+}
+
+/* Footer */
+[data-theme="dark"] footer {
+    background: var(--sidebar-bg, #0F172A) !important;
+    color: var(--text-secondary, #94A3B8) !important;
+    border-top-color: var(--border-color, #334155) !important;
+}
+
+[data-theme="dark"] footer h3,
+[data-theme="dark"] footer h4 {
+    color: var(--text-primary, #F1F5F9) !important;
+}
+
+[data-theme="dark"] footer a {
+    color: var(--text-secondary, #94A3B8) !important;
+}
+
+[data-theme="dark"] footer a:hover {
+    color: #C4B5FD !important;
+}
+
+/* General Text Colors */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+    color: var(--text-primary, #F1F5F9) !important;
+}
+
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] li {
+    color: var(--text-secondary, #CBD5E1) !important;
+}
+
+[data-theme="dark"] a {
+    color: #93C5FD !important;
+}
+
+[data-theme="dark"] a:hover {
+    color: #C4B5FD !important;
+}
+
+/* Buttons */
+[data-theme="dark"] .btn,
+[data-theme="dark"] button {
+    background: var(--card-bg, #1E293B) !important;
+    color: var(--text-primary, #F1F5F9) !important;
+    border-color: var(--border-color, #334155) !important;
+}
+
+[data-theme="dark"] .btn-primary,
+[data-theme="dark"] button.primary {
+    background: #7C3AED !important;
+    color: white !important;
+}
+
+/* Carousel/Slider */
+[data-theme="dark"] .carousel,
+[data-theme="dark"] .slider {
+    background: var(--bg-primary, #0F172A) !important;
+}
+
+[data-theme="dark"] .carousel-control,
+[data-theme="dark"] .slider-control {
+    background: rgba(30, 41, 59, 0.8) !important;
+    color: white !important;
+}
+
+/* Section Headers */
+[data-theme="dark"] .section-title,
+[data-theme="dark"] [class*="section"] h2 {
+    color: var(--text-primary, #F1F5F9) !important;
+}
+
+[data-theme="dark"] .section-subtitle,
+[data-theme="dark"] [class*="section"] p {
+    color: var(--text-secondary, #94A3B8) !important;
+}
+
+/* ============================================
+   FOOTER DARK MODE - PERBAIKI BORDER
+   ============================================ */
+
+[data-theme="dark"] .footer {
+    background: var(--sidebar-bg, #0F172A) !important;
+    border-top-color: var(--border-color, #334155) !important;
+    border-top-width: 2px !important;
+}
+
+[data-theme="dark"] .footer-bottom {
+    border-top-color: var(--border-color, #334155) !important;
+}
+
+[data-theme="dark"] .footer h3 {
+    color: var(--text-primary, #F1F5F9) !important;
+}
+
+[data-theme="dark"] .footer p,
+[data-theme="dark"] .footer a {
+    color: var(--text-secondary, #CBD5E1) !important;
+}
+
+[data-theme="dark"] .social-links a {
+    background: var(--bg-secondary, #1E293B) !important;
+    border-color: var(--border-color, #334155) !important;
+}
+
+[data-theme="dark"] .social-links a:hover {
+    background: #7C3AED !important;
+    border-color: #7C3AED !important;
+    color: white !important;
+}
+
+/* Navbar Dark Mode */
+[data-theme="dark"] .navbar {
+    background: var(--topbar-bg, #1E293B) !important;
+    border-bottom-color: var(--border-color, #334155) !important;
+}
+
+[data-theme="dark"] .navbar-brand {
+    color: var(--text-primary, #F1F5F9) !important;
+}
+
+[data-theme="dark"] .navbar-menu a {
+    color: var(--text-secondary, #94A3B8) !important;
+}
+
+[data-theme="dark"] .navbar-menu a:hover,
+[data-theme="dark"] .navbar-menu a.active {
+    background: var(--hover-bg, #334155) !important;
+    color: var(--text-primary, #F1F5F9) !important;
+}
+
+/* Dark Mode Toggle Button - Floating */
+[data-theme="dark"] .dark-mode-toggle {
+    background: var(--card-bg, #1E293B) !important;
+    border-color: var(--border-color, #334155) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+}
+
+/* Hover states untuk dark mode */
+[data-theme="dark"] .hover-lift:hover {
+    background: var(--hover-bg, #334155) !important;
+}
+
+/* Cards di dark mode */
+[data-theme="dark"] .carousel-container {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+}
+
+[data-theme="dark"] .carousel-btn {
+    background: var(--card-bg, #1E293B) !important;
+    border-color: var(--border-color, #334155) !important;
+    color: var(--text-primary, #F1F5F9) !important;
+}

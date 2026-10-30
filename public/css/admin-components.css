@@ -1,0 +1,132 @@
+/* ============================================
+   ADMIN COMPONENTS - REUSABLE BUTTONS
+   ============================================ */
+
+/* Base Button Styles */
+.btn-admin {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 12px 28px !important;
+    border-radius: 12px !important;
+    border: none !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-decoration: none !important;
+    font-family: inherit !important;
+    line-height: 1.5 !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+}
+
+/* Button Variants */
+.btn-admin-primary {
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3) !important;
+}
+.btn-admin-primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
+    background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
+}
+
+.btn-admin-success {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3) !important;
+}
+.btn-admin-success:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4) !important;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+}
+
+.btn-admin-danger {
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3) !important;
+}
+.btn-admin-danger:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4) !important;
+    background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%) !important;
+}
+
+.btn-admin-secondary {
+    background: var(--bg-tertiary, #F1F5F9) !important;
+    color: var(--text-primary, #475569) !important;
+    border: 2px solid var(--border-color, #CBD5E1) !important;
+}
+.btn-admin-secondary:hover {
+    background: var(--border-color, #E2E8F0) !important;
+    color: var(--text-primary, #1E293B) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+}
+
+/* Button Sizes */
+.btn-admin-sm {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+    min-width: 75px !important;
+    height: 36px !important;
+}
+
+.btn-admin-md {
+    padding: 12px 28px !important;
+    font-size: 14px !important;
+    min-width: 140px !important;
+}
+
+.btn-admin-lg {
+    padding: 16px 32px !important;
+    font-size: 16px !important;
+    min-width: 180px !important;
+}
+
+/* Dark Mode Support */
+[data-theme="dark"] .btn-admin-secondary {
+    background: #334155 !important;
+    color: #F1F5F9 !important;
+    border-color: #475569 !important;
+}
+[data-theme="dark"] .btn-admin-secondary:hover {
+    background: #475569 !important;
+    color: #FFFFFF !important;
+}
+
+/* ============================================
+   ADMIN COMPONENTS - FORM ELEMENTS
+   ============================================ */
+
+.form-input-admin {
+    width: 100% !important;
+    padding: 12px 16px !important;
+    border: 2px solid var(--border-color, #E2E8F0) !important;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+    background: var(--input-bg, #F8FAFC) !important;
+    color: var(--text-primary, #1E293B) !important;
+    transition: all 0.3s !important;
+    box-sizing: border-box !important;
+    font-family: inherit !important;
+}
+.form-input-admin:focus {
+    outline: none !important;
+    border-color: #667eea !important;
+    background: white !important;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1) !important;
+}
+
+[data-theme="dark"] .form-input-admin {
+    background: #0F172A !important;
+    border-color: #334155 !important;
+    color: #F1F5F9 !important;
+}
+[data-theme="dark"] .form-input-admin:focus {
+    background: #1E293B !important;
+    border-color: #667eea !important;
+}
